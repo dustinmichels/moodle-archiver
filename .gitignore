@@ -1,0 +1,4 @@
+__pycache__/
+*.html
+.vscode/
+scraper/my_info.py
