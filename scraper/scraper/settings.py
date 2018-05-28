@@ -9,14 +9,17 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+
+from .user_info import USERNAME, PASSWORD
+
 BOT_NAME = 'scraper'
 
 SPIDER_MODULES = ['scraper.spiders']
 NEWSPIDER_MODULE = 'scraper.spiders'
 
-# Enter your info here!
-MOODLE_USERNAME = 'washingtong'
-MOODLE_PASSWORD = 'my-password'
+# Set Moodle login info
+MOODLE_USERNAME = USERNAME
+MOODLE_PASSWORD = PASSWORD
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'scraper (+http://www.yourdomain.com)'
