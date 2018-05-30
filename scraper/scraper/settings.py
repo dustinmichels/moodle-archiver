@@ -73,6 +73,12 @@ ROBOTSTXT_OBEY = False
 #ITEM_PIPELINES = {
 #    'scraper.pipelines.ScraperPipeline': 300,
 #}
+ITEM_PIPELINES = {
+    # 'scrapy.pipelines.files.FilesPipeline': 1,
+    'scraper.pipelines.SaveFilesPipeline': 300,
+}
+FILES_STORE = './files'
+MEDIA_ALLOW_REDIRECTS = True
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

@@ -1,6 +1,8 @@
 # Moodle Archiver
 
-Archive your moodle! Hooray!
+Download a local copy of your Moodle files and pages. Hooray!
+
+*WORK IN PROGRSS*
 
 ![moodle](images/logo-small.png)
 
@@ -28,5 +30,11 @@ conda install -c conda-forge scrapy
 cd scraper
 
 # run scrapy crawler
-scrapy crawl login
+scrapy crawl moodle -o moodle.json
+```
+
+## Dev
+
+```bash
+scrapy shell ./html/course-Algorithms.html
 ```

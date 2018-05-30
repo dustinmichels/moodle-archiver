@@ -1,4 +1,16 @@
-__pycache__/
-*.html
-.vscode/
+# User data
 scraper/scraper/user_info.py
+
+# Python / Jupyter
+__pycache__
+.ipynb_checkpoints
+
+# Output / Build
+files/
+html/
+*.json
+
+# Editors
+.vscode/
+.idea
+
