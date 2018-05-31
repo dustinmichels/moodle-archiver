@@ -5,6 +5,7 @@ import re
 class MoodleSpider(scrapy.Spider):
     name = 'moodle'
     start_urls = ['https://moodle.carleton.edu/auth/shibboleth/index.php']
+    write_path = 'output/html/'
 
     # 1. Press continue on initial form
     def parse(self, response):
@@ -27,55 +28,53 @@ class MoodleSpider(scrapy.Spider):
 
     # 4. Get all the links to courses
     def after_logged_in(self, response):
-        with open('html/homepage.html', 'wb') as f:
+        with open('output/html/homepage.html', 'wb') as f:
             self.logger.info('Writing %s', response.url)
             f.write(response.body)
 
         if "The password you entered was incorrect" in response.text:
             self.logger.error("Login failed")
             return
-
         self.logger.info("Login successful")
 
         course_tree = response.css('ol.tree')
-        terms = course_tree.xpath('li/ol/li[not(@class)]')
 
-        t = terms[0]  # temp: just take first term
-        for term in [t]:
-            term_name = term.xpath('./label/text()').extract_first()
-            course_urls = term.xpath('ol/li/a/@href').extract()
+        with open('output/html/tree.html', 'w') as f:
+            self.logger.info('Writing tree')
+            f.write(course_tree.extract_first())
 
-            u = course_urls[0]  # temp: just use first course
-            for url in [u]:
-                yield scrapy.Request(
-                    url=url,
-                    callback=self.parse_course,
-                    meta={'term': term_name})
+        courses = course_tree.xpath('.//li[@class="course"]')
+
+        for c in courses:
+            ancestors = c.xpath('ancestor::li/label/@title').extract()
+            path = '/'.join(ancestors)
+            url = c.xpath('./a/@href').extract_first()
+            yield scrapy.Request(url=url, callback=self.parse_course, meta={'path': path})
 
     # 5. Parse individual courses
     def parse_course(self, response):
 
         course_name = response.xpath('//h1/text()').extract_first()
-        term_name = response.meta.get('term')
+        path = response.meta.get('path')
 
         self.logger.info("Parsing {}".format(course_name))
 
         # course_id = response.url.split("id=")[1]
         filename = 'course-%s.html' % course_name
-        with open(f'html/{filename}', 'wb') as f:
+        with open(f'output/html/{filename}', 'wb') as f:
             self.logger.info('Writing %s', course_name)
             f.write(response.body)
 
         main_selector = response.xpath('//section[@id="region-main"]')
 
-        with open(f'html/{course_name}-main.html', 'w') as f:
+        with open(f'output/html/{course_name}-main.html', 'w') as f:
             self.logger.info('Writing main %s', course_name)
             f.write(main_selector.extract_first())
 
         files_selector = main_selector.xpath('.//a[contains(@href,"resource")]')
         file_urls = files_selector.xpath('.//@href[contains(.,"resource")]').extract()
         file_data_dicts = self.get_files_metadata(files_selector)
-        return dict(course_name=course_name, term_name=term_name, file_urls=file_urls, file_data=file_data_dicts)
+        return dict(course_name=course_name, path=path, file_urls=file_urls, file_data=file_data_dicts)
 
     @staticmethod
     def get_files_metadata(files_sel):
@@ -102,7 +101,7 @@ class MoodleSpider(scrapy.Spider):
         # convert list of lists into dict of metadata
         file_data_dicts = {}
         for file in file_data_lists:
-            # Separate out data fields values
+            # Separate output data fields values
             url, name, ext, sect_id, sect_name = file
 
             # clean extension (ie, pdf-24 -> .pdf)

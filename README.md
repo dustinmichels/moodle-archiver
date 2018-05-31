@@ -1,8 +1,14 @@
 # Moodle Archiver
 
-Download a local copy of your Moodle files and pages. Hooray!
-
 *WORK IN PROGRSS*
+
+Hey, college was neat. But now it has come to an end.
+
+There are lots of things to be scared of, but loosing access
+to Moodle and the course materials therein, is no longer one of them!
+
+Use this program to download a local copy of your Moodle files
+and pages today. Hooray!!!
 
 ![moodle](images/logo-small.png)
 
@@ -30,11 +36,13 @@ conda install -c conda-forge scrapy
 cd scraper
 
 # run scrapy crawler
-scrapy crawl moodle -o moodle.json
+scrapy crawl moodle -o output/moodle.json
 ```
 
-## Dev
+## Dev Notes
+
+From scraper directory, local scraping via:
 
 ```bash
-scrapy shell ./html/course-Algorithms.html
+scrapy shell ./output/html/course-Algorithms.html
 ```

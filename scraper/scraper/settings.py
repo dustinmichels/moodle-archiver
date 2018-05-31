@@ -77,7 +77,7 @@ ITEM_PIPELINES = {
     # 'scrapy.pipelines.files.FilesPipeline': 1,
     'scraper.pipelines.SaveFilesPipeline': 300,
 }
-FILES_STORE = './files'
+FILES_STORE = './output/files'
 MEDIA_ALLOW_REDIRECTS = True
 
 # Enable and configure the AutoThrottle extension (disabled by default)
