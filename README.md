@@ -4,11 +4,7 @@
 
 Hey, college was neat. But now it has come to an end.
 
-There are lots of things to be scared of, but loosing access
-to Moodle and the course materials therein, is no longer one of them!
-
-Use this program to download a local copy of your Moodle files
-and pages today. Hooray!!!
+Before you loose access to Moodle, make sure all your resources are downloaded neatly for future referecnes! You could go through and download everything by hand, but this program will make the process quick & easy. Hooray!
 
 ![moodle](images/logo-small.png)
 
