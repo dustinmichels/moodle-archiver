@@ -1,2 +1,4 @@
+beautifulsoup4
+flask
 scrapy
 html2text

@@ -74,10 +74,9 @@ ROBOTSTXT_OBEY = False
 #    'scraper.pipelines.ScraperPipeline': 300,
 #}
 ITEM_PIPELINES = {
-    # 'scrapy.pipelines.files.FilesPipeline': 1,
     'scraper.pipelines.SaveFilesPipeline': 300,
 }
-FILES_STORE = './output/files'
+FILES_STORE = './output/'
 MEDIA_ALLOW_REDIRECTS = True
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -100,3 +99,7 @@ MEDIA_ALLOW_REDIRECTS = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# For export
+FEED_FORMAT = 'json'
+FEED_URI = 'output/moodle.json'
